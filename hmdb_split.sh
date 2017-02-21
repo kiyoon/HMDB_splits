@@ -38,13 +38,13 @@ do
 		then 
 			echo "Error: $split_dir/${name}_test_split${i}.txt doesn't consist 70 training data." 1>&2
 		fi
-		echo "$file" | xargs -i cp "$data_dir/$name/{}" "$out_dir/train$i/$name"
+		echo "$file" | xargs -i sh -c "cp '$data_dir/$name/{}'* '$out_dir/train$i/$name'"
 
 		file=$(echo "$file_content" | grep ' 2 $' | awk '{print $1}')
 		if [ $(echo "$file" | wc -l) -ne 30 ]
 		then 
 			echo "Error: $split_dir/${name}_test_split${i}.txt doesn't consist 70 training data." 1>&2
 		fi
-		echo "$file" | xargs -i cp "$data_dir/$name/{}" "$out_dir/val$i/$name"
+		echo "$file" | xargs -i sh -c "cp '$data_dir/$name/{}'* '$out_dir/val$i/$name'"
 	done
 done	
