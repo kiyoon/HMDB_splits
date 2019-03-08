@@ -1,12 +1,12 @@
 #!/bin/bash
 
 # Author: Kiyoon Kim (yoonkr33@gmail.com)
-# Description: Split(Copy) HMDB51 dataset with provided Three Splits text files.
+# Description: Split(hard link) HMDB51 dataset with provided Three Splits text files.
 
 if [ $# -lt 3 ]
 then
 	echo "Usage: $0 [Three Splits directory] [Dataset location] [Output directory]"
-	echo "Split(Copy) HMDB51 dataset with provided Three Splits text files."
+	echo "Split(hard link) HMDB51 dataset with provided Three Splits text files."
 	echo "Author: Kiyoon Kim (yoonkr33@gmail.com)"
 	exit 0
 fi
@@ -38,13 +38,13 @@ do
 		then 
 			echo "Error: $split_dir/${name}_test_split${i}.txt doesn't consist 70 training data." 1>&2
 		fi
-		echo "$file" | xargs -i sh -c "cp '$data_dir/$name/{}'* '$out_dir/train$i/$name'"
+		echo "$file" | xargs -i sh -c "cp -al '$data_dir/$name/{}'* '$out_dir/train$i/$name'"
 
 		file=$(echo "$file_content" | grep ' 2 $' | awk '{print $1}')
 		if [ $(echo "$file" | wc -l) -ne 30 ]
 		then 
 			echo "Error: $split_dir/${name}_test_split${i}.txt doesn't consist 70 training data." 1>&2
 		fi
-		echo "$file" | xargs -i sh -c "cp '$data_dir/$name/{}'* '$out_dir/val$i/$name'"
+		echo "$file" | xargs -i sh -c "cp -al '$data_dir/$name/{}'* '$out_dir/val$i/$name'"
 	done
 done	
